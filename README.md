@@ -6,6 +6,7 @@ Display weather information using the [Weather Api](https://www.weatherapi.com/d
 bundle install
 docker-compose up
 bin/setup
+bin/rails dev:cache
 bin/dev
 ```
 

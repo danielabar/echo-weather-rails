@@ -7,6 +7,7 @@ class WeatherController < ApplicationController
 
     if result.success?
       @weather_current = result.weather_current
+      @cached_message = "Cached results" if result.from_cache
     else
       flash.now[:message] = result.error
     end

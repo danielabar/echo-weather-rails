@@ -2,7 +2,6 @@
 class SearchWeather
   include Interactor
 
-  # TODO: Check if address is in cache before fetching it again from api
   def call
     address = context.address
     forecast = fetch_forecast(address)
@@ -36,8 +35,11 @@ class SearchWeather
   end
 
   def fetch_forecast(address)
-    weather_client = Weather::Client.new
-    weather_client.today(city: address)
+    context.from_cache = true
+    Rails.cache.fetch(address, expires_in: 30.minutes) do
+      context.from_cache = false
+      Weather::Client.new.today(city: address)
+    end
   end
 
   def air_quality(aq_val)
