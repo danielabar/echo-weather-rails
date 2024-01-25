@@ -2,12 +2,13 @@
 class SearchWeather
   include Interactor
 
+  # TODO: Check if address is in cache before fetching it again from api
   def call
     address = context.address
-    # TODO: Check if address is in cache before fetching it again from api
     forecast = fetch_forecast(address)
-
     context.weather_current = build_weather_current(forecast)
+  rescue Weather::ApiError => e
+    context.fail!(error: "Weather API Error: #{e.message}")
   end
 
   private

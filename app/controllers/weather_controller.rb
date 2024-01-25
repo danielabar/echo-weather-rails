@@ -8,7 +8,7 @@ class WeatherController < ApplicationController
     if result.success?
       @weather_current = result.weather_current
     else
-      flash.now[:message] = "Failed to fetch weather data."
+      flash.now[:message] = result.error
     end
 
     render :index
