@@ -2,6 +2,13 @@
 
 Display weather information using the [Weather Api](https://www.weatherapi.com/docs/).
 
+```bash
+bundle install
+docker-compose up
+bin/setup
+bin/dev
+```
+
 This README would normally document whatever steps are necessary to get the
 application up and running.
 
