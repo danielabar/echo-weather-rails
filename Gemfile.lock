@@ -133,6 +133,7 @@ GEM
       actionpack (>= 6.0.0)
       activesupport (>= 6.0.0)
       railties (>= 6.0.0)
+    interactor (3.1.2)
     io-console (0.7.2)
     irb (1.11.1)
       rdoc
@@ -369,6 +370,7 @@ DEPENDENCIES
   faker
   faraday
   importmap-rails
+  interactor
   jbuilder
   pg (~> 1.1)
   puma (>= 5.0)

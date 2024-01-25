@@ -41,3 +41,7 @@ Layout/LineLength:
 
 RSpec/ExampleLength:
   Max: 15
+
+# Only if not using I18n
+Rails/I18nLocaleTexts:
+  Enabled: false
