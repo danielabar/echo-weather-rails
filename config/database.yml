@@ -1,0 +1,21 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  database: <%= ENV['DATABASE_NAME'] || "echo_weather_rails" %>
+  username: <%= ENV['DATABASE_USER'] || "echo_weather_rails" %>
+  password: <%= ENV['DATABASE_PASSWORD'] || "echo_weather_rails" %>
+  port: <%= ENV['DATABASE_PORT'] || "5432" %>
+  host: <%= ENV['DATABASE_HOST'] || "127.0.0.1" %>
+development:
+  <<: *default
+  port: 5440
+test:
+  <<: *default
+  database: echo_weather_rails_test
+  port: 5440
+production:
+  <<: *default
+  database: echo_weather_rails_production
+  username: echo_weather_rails
+  password: <%= ENV['ECHO_WEATHER_RAILS_DATABASE_PASSWORD'] %>
