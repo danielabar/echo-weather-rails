@@ -35,8 +35,6 @@ RSpec.configure do |config|
     Rails.root.join("spec/fixtures")
   ]
 
-  config.include FactoryBot::Syntax::Methods
-
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
@@ -64,6 +62,13 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+
+  # Allows tests to use FactoryBot methods like `build`, `build_stubbed`, `create` etc.
+  # without having to be preceded by FactoryBot. For example:
+  # subject(:retrospective) { build_stubbed(:retrospective) }
+  # instead of
+  # subject(:retrospective) { FactoryBot.build_stubbed(:retrospective) }
+  config.include FactoryBot::Syntax::Methods
 end
 
 Shoulda::Matchers.configure do |config|
