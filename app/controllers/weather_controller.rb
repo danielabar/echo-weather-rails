@@ -13,12 +13,25 @@ class WeatherController < ApplicationController
   private
 
   def build_weather_current
+    current_data = @forecast["current"]
+    location_data = @forecast["location"]
+
     Weather::Current.new(
-      temperature_celsius: @forecast["current"]["temp_c"].to_f,
-      condition: @forecast["current"]["condition"]["text"],
-      air_quality: air_quality(@forecast["current"]["air_quality"]["us-epa-index"]),
-      icon: @forecast["current"]["condition"]["icon"]
+      temperature_celsius: extract_temperature(current_data),
+      condition: extract_condition(current_data),
+      air_quality: air_quality(current_data["air_quality"]["us-epa-index"]),
+      icon: current_data["condition"]["icon"],
+      region: location_data["region"],
+      country: location_data["country"]
     )
+  end
+
+  def extract_temperature(data)
+    data["temp_c"].to_f
+  end
+
+  def extract_condition(data)
+    data["condition"]["text"]
   end
 
   def fetch_forecast(address)
