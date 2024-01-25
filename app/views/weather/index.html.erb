@@ -1,9 +1,9 @@
 <div class="container mx-auto mt-8">
   <h1 class="text-3xl font-semibold mb-4">Echo Weather Rails</h1>
 
-  <%= form_tag(weather_search_path, method: :get, class: "mb-4") do %>
-    <%= text_field_tag(:address, params[:address], class: "p-2 border border-gray-300", placeholder: "Enter city, postal or zip code", autofocus: true) %>
-    <%= submit_tag("Get Forecast", class: "p-2 bg-blue-500 text-white") %>
+  <%= form_with(url: weather_search_path, method: :get, class: "mb-4") do |form| %>
+    <%= form.text_field :address, class: "p-2 border border-gray-300", placeholder: "Enter city", autofocus: true %>
+    <%= form.submit "Get Forecast", class: "p-2 bg-blue-500 text-white" %>
   <% end %>
 
   <% if @weather_current.present? %>
@@ -13,6 +13,10 @@
       <p>Temperature: <%= @weather_current.temperature_celsius %>°C</p>
       <p>Condition: <%= @weather_current.condition %></p>
       <p>Air Quality: <%= @weather_current.air_quality %></p>
+    </div>
+
+    <div class="mt-4">
+      <%= link_to "Clear Results", root_path, class: "underline text-blue-500" %>
     </div>
   <% end %>
 </div>
