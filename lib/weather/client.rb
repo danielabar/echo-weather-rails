@@ -12,30 +12,31 @@ module Weather
       endpoint = "current.json"
       params = { q: city, aqi: "yes" }
       response = @conn.get(endpoint, params)
-      JSON.parse(response.body)
-      # parse_today(JSON.parse(response.body))
+      Rails.logger.debug { "Weather API Response for #{city}: #{response.body}" }
+
+      if response.status.between?(400, 499)
+        handle_api_error(response)
+      elsif response.status >= 500
+        handle_server_error(response)
+      else
+        JSON.parse(response.body)
+      end
     end
 
     private
 
-    def parse_today(json)
-      location = json["location"]
-      current = json["current"]
-      condition = current["condition"]
-      "Weather for #{location['name']}, #{location['country']} is #{current['temp_c']} degrees. #{condition['text']}.\
- Air quality is #{air_quality(current['air_quality']['us-epa-index'])}"
+    def handle_api_error(response)
+      error_data = JSON.parse(response.body)["error"]
+      error_code = error_data["code"]
+      error_message = error_data["message"]
+
+      raise Weather::ApiError.new(error_code, error_message)
+    rescue JSON::ParserError
+      raise Weather::ApiError.new(response.status, "Unexpected API error format.")
     end
 
-    def air_quality(aq_val)
-      aq_map = {
-        1 => "Good",
-        2 => "Moderate",
-        3 => "Unhealthy for sensitive groups",
-        4 => "Unhealthy",
-        5 => "Very Unhealthy",
-        6 => "Hazardous"
-      }
-      aq_map[aq_val] || "Unknown"
+    def handle_server_error(response)
+      raise Weather::ApiError.new(response.status, "Server error occurred.")
     end
   end
 end
