@@ -1,4 +1,6 @@
-# README
+# Echo Weather Rails
+
+Display weather information using the [Weather Api](https://www.weatherapi.com/docs/).
 
 This README would normally document whatever steps are necessary to get the
 application up and running.
