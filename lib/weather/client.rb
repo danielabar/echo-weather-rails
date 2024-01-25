@@ -1,4 +1,3 @@
-# app/services/weather/client.rb
 module Weather
   class Client
     def initialize(conn = nil)
