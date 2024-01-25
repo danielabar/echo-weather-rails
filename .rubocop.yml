@@ -45,3 +45,6 @@ RSpec/ExampleLength:
 # Only if not using I18n
 Rails/I18nLocaleTexts:
   Enabled: false
+
+RSpec/MultipleExpectations:
+  Max: 5

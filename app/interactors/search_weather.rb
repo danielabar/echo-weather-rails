@@ -1,4 +1,3 @@
-# app/interactors/search_weather.rb
 class SearchWeather
   include Interactor
 
