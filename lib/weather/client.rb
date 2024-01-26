@@ -8,16 +8,16 @@ module Weather
       )
     end
 
-    def today(city:)
+    def today(address:)
       endpoint = "current.json"
-      params = { q: city, aqi: "yes" }
+      params = { q: address, aqi: "yes" }
       response = @conn.get(endpoint, params)
-      Rails.logger.debug { "Weather API Response for #{city}: #{response.body}" }
+      Rails.logger.debug { "Weather API Response for #{address}: #{response.body}" }
 
       if response.status.between?(400, 499)
-        handle_api_error(response, city)
+        handle_api_error(response, address)
       elsif response.status >= 500
-        handle_server_error(response, city)
+        handle_server_error(response, address)
       else
         JSON.parse(response.body)
       end
@@ -25,25 +25,25 @@ module Weather
 
     private
 
-    def handle_api_error(response, city)
+    def handle_api_error(response, address)
       error_data = JSON.parse(response.body)["error"]
       error_code = error_data["code"]
       error_message = error_data["message"]
-      log_error(city, response.status, error_code, error_message)
+      log_error(address, response.status, error_code, error_message)
 
       raise Weather::ApiError.new(error_code, error_message)
     rescue JSON::ParserError
       raise Weather::ApiError.new(response.status, "Unexpected API error format.")
     end
 
-    def handle_server_error(response, city)
-      log_error(city, response.status, nil, "Server error occurred.")
+    def handle_server_error(response, address)
+      log_error(address, response.status, nil, "Server error occurred.")
       raise Weather::ApiError.new(response.status, "Server error occurred.")
     end
 
-    def log_error(city, status, error_code, error_message)
+    def log_error(address, status, error_code, error_message)
       Rails.logger.error do
-        "Weather API Error for #{city}: " \
+        "Weather API Error for #{address}: " \
           "Status: #{status}, Code: #{error_code || 'N/A'}, Message: #{error_message || 'N/A'}"
       end
     end

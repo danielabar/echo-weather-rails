@@ -33,7 +33,7 @@ describe SearchWeather do
       weather_client_instance = instance_double(Weather::Client)
       allow(Weather::Client).to receive(:new).and_return(weather_client_instance)
       allow(weather_client_instance).to receive(:today).and_return(weather_response)
-      expect(weather_client_instance).to receive(:today).once.with(city: "Paris")
+      expect(weather_client_instance).to receive(:today).once.with(address: "Paris")
 
       Rails.cache.with_local_cache do
         result1 = described_class.call(address: "Paris")

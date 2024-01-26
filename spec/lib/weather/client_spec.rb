@@ -21,7 +21,7 @@ describe Weather::Client do
         ]
       end
 
-      response = client.today(city: "Paris")
+      response = client.today(address: "Paris")
       expect(response).to eq(paris_weather)
       stubs.verify_stubbed_calls
     end
@@ -38,7 +38,7 @@ describe Weather::Client do
       end
 
       expect do
-        client.today(city: "InvalidCity")
+        client.today(address: "InvalidCity")
       end.to raise_error(Weather::ApiError, "No matching location found.")
       stubs.verify_stubbed_calls
     end
@@ -55,7 +55,7 @@ describe Weather::Client do
       end
 
       expect do
-        client.today(city: "InvalidCity")
+        client.today(address: "InvalidCity")
       end.to raise_error(Weather::ApiError, "Unexpected API error format.")
       stubs.verify_stubbed_calls
     end
@@ -71,7 +71,7 @@ describe Weather::Client do
         ]
       end
 
-      expect { client.today(city: "ServerIssueCity") }.to raise_error(Weather::ApiError, "Server error occurred.")
+      expect { client.today(address: "ServerIssueCity") }.to raise_error(Weather::ApiError, "Server error occurred.")
       stubs.verify_stubbed_calls
     end
   end

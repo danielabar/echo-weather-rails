@@ -47,7 +47,7 @@ class SearchWeather
     context.from_cache = true
     Rails.cache.fetch(address, expires_in: 30.minutes) do
       context.from_cache = false
-      Weather::Client.new.today(city: address)
+      Weather::Client.new.today(address:)
     end
   end
 
