@@ -28,6 +28,7 @@ describe SearchWeather do
       )
     end
 
+    # Reference: https://blog.lambda.cx/posts/testing-rails-cache/
     it "caches subsequent call" do
       weather_client_instance = instance_double(Weather::Client)
       allow(Weather::Client).to receive(:new).and_return(weather_client_instance)
@@ -51,6 +52,15 @@ describe SearchWeather do
 
       expect(result).to be_a_failure
       expect(result.error).to eq("Weather API Error: City not found")
+    end
+
+    context "with a blank address" do
+      let(:context) { Interactor::Context.new(address: "") }
+
+      it "fails with an error message" do
+        expect(result).to be_a_failure
+        expect(result.error).to eq("Address must be provided")
+      end
     end
   end
 end
