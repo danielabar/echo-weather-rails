@@ -6,9 +6,15 @@
     <%= form.submit "Get Forecast", class: "p-2 bg-blue-500 text-white" %>
   <% end %>
 
+  <% if @cached_message.present? %>
+    <div class="bg-yellow-200 border-yellow-400 text-yellow-700 p-2 mb-4">
+      <%= @cached_message %>
+    </div>
+  <% end %>
+
   <% if @weather_current.present? %>
     <div class="mt-8">
-      <h2 class="text-2xl font-semibold mb-4">Forecast for <%= "#{@weather_current.location_name}, #{@weather_current.region}, #{@weather_current.country}" %></h2>
+      <h2 class="text-2xl font-semibold mb-4">Current weather for <%= "#{@weather_current.location_name}, #{@weather_current.region}, #{@weather_current.country}" %></h2>
       <img src="<%= @weather_current.icon %>" alt="Weather Icon" class="mb-2">
       <p>Temperature: <%= @weather_current.temperature_celsius %>°C</p>
       <p>Condition: <%= @weather_current.condition %></p>
@@ -16,7 +22,7 @@
     </div>
 
     <div class="mt-4">
-      <%= link_to "Clear Results", root_path, class: "underline text-blue-500" %>
+      <%= link_to "New Search", root_path, class: "underline text-blue-500" %>
     </div>
   <% end %>
 </div>
