@@ -1,29 +1,7 @@
 <div class="container mx-auto mt-8">
   <h1 class="text-3xl font-semibold mb-4">Echo Weather</h1>
 
-  <%= form_with(url: weather_search_path, method: :get, class: "mb-4") do |form| %>
-    <%= form.text_field :address, class: "p-2 border border-gray-300 w-64", placeholder: "Enter city, postal, or zip code", autofocus: true %>
-    <%= form.submit "Get Forecast", class: "p-2 bg-blue-500 text-white" %>
-  <% end %>
+  <%= render "search_form" %>
 
-  <% if @weather_current.present? %>
-    <div class="mt-8">
-      <h2 class="text-2xl font-semibold mb-4">Current weather for <%= "#{@weather_current.location_name}, #{@weather_current.region}, #{@weather_current.country}" %></h2>
-
-      <% if @cached_message.present? %>
-        <span class="bg-yellow-200 border-yellow-400 text-yellow-700 px-4 py-2 mb-4 rounded-full inline-block">
-          <%= @cached_message %>
-        </span>
-      <% end %>
-
-      <img src="<%= @weather_current.icon %>" alt="Weather Icon" class="mb-2">
-      <p>Temperature: <%= @weather_current.temperature_c %>°C / <%= @weather_current.temperature_f %>°F</p>
-      <p>Condition: <%= @weather_current.condition %></p>
-      <p>Air Quality: <%= @weather_current.air_quality %></p>
-    </div>
-
-    <div class="mt-4">
-      <%= link_to "New Search", root_path, class: "underline text-blue-500" %>
-    </div>
-  <% end %>
+  <%= render "current", weather_current: @weather_current, cached_message: @cached_message %>
 </div>
