@@ -3,6 +3,11 @@ class SearchWeather
 
   def call
     address = context.address
+    if address.blank?
+      context.fail!(error: "Address must be provided")
+      return
+    end
+
     forecast = fetch_forecast(address)
     context.weather_current = build_weather_current(forecast)
   rescue Weather::ApiError => e
