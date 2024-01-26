@@ -16,9 +16,9 @@ describe SearchWeather do
 
       expect(result).to be_a_success
       expect(result.from_cache).to be_falsey
-      expect(result.weather_current).to be_a(Weather::Current)
       expect(result.weather_current).to have_attributes(
-        temperature_celsius: 11.0,
+        temperature_c: 11.0,
+        temperature_f: 51.8,
         condition: "Partly cloudy",
         air_quality: "Good",
         icon: "//cdn.weatherapi.com/weather/64x64/night/116.png",
