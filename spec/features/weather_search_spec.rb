@@ -14,7 +14,7 @@ describe "Weather Search" do
     click_on "Get Forecast"
 
     expect(page).to have_content("Current weather for Paris, Ile-de-France, France")
-    expect(page).to have_content("Temperature: 11.0°C")
+    expect(page).to have_content("Temperature: 11.0°C / 51.8°F")
     expect(page).to have_content("Condition: Partly cloudy")
     expect(page).to have_content("Air Quality: Good")
   end

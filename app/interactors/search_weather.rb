@@ -20,7 +20,8 @@ class SearchWeather
     current_data = forecast["current"]
     location_data = forecast["location"]
     Weather::Current.new(
-      temperature_celsius: extract_temperature(current_data),
+      temperature_c: extract_temperature_c(current_data),
+      temperature_f: extract_temperature_f(current_data),
       condition: extract_condition(current_data),
       air_quality: air_quality(current_data["air_quality"]["us-epa-index"]),
       icon: current_data["condition"]["icon"],
@@ -30,8 +31,12 @@ class SearchWeather
     )
   end
 
-  def extract_temperature(data)
+  def extract_temperature_c(data)
     data["temp_c"].to_f
+  end
+
+  def extract_temperature_f(data)
+    data["temp_f"].to_f
   end
 
   def extract_condition(data)
