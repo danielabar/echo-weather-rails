@@ -77,7 +77,7 @@ Weather results are cached for 30 minutes, so for example, if you search for "To
 
 ## Testing
 
-Echo Weather uses a combination of RSpec and FactoryBot for automated testing. The test suite includes unit tests for interactors and library components, integration tests (RSpec request type tests), and feature tests (end-to-end tests) using Capybara to simulate user interactions with the web application.
+Echo Weather uses a combination of RSpec and FactoryBot for automated testing. The test suite includes unit tests for interactors and library components, integration tests (RSpec request type tests), and feature tests (end-to-end tests) using [Capybara](https://github.com/teamcapybara/capybara) to simulate user interactions with the web application.
 
 ### Running Tests
 
@@ -98,6 +98,8 @@ To run only the end-to-end (aka feature) tests:
 ```bash
 bin/rspec features
 ```
+
+Note that Capybara is currently using the default `:rack_test` driver rather than `:selenium`. This provides the best performance but doesn't support JavaScript. Since this app isn't using a JavaScript single-page-app framework such as React or Vue, the `:rack_test` driver is sufficient. See the Capybara docs on [Selecting the Driver](https://github.com/teamcapybara/capybara?tab=readme-ov-file#selecting-the-driver) for more details.
 
 ## Components
 
