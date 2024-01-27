@@ -5,7 +5,7 @@ Echo Weather is a Ruby on Rails application built to showcase real-time weather 
 ## Dependencies
 
 * Install [Docker](https://www.docker.com/) for your OS.
-* Install the Ruby version specified in [.ruby_version](.ruby-version) with your preferred Ruby version manager.
+* Install the Ruby version specified in [.ruby-version](.ruby-version) with your preferred Ruby version manager.
 
 ## Getting Started
 
