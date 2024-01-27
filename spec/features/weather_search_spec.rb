@@ -18,4 +18,12 @@ describe "Weather Search" do
     expect(page).to have_content("Condition: Partly cloudy")
     expect(page).to have_content("Air Quality: Good")
   end
+
+  it "displays an error message when no address provided" do
+    visit root_path
+
+    click_on "Get Forecast"
+
+    expect(page).to have_content("Alert! Address must be provided")
+  end
 end
