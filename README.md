@@ -1,6 +1,6 @@
 # Echo Weather
 
-Echo Weather is a Ruby on Rails application built to showcase real-time weather data using the [Weather Api](https://www.weatherapi.com/docs/). The project integrates key technical concepts, including Rails controllers, service objects (Interactors), model objects not backed by a database table, and a custom client for Weather API interaction. TailwindCSS is used for styling the views.
+Echo Weather is a Ruby on Rails application built to showcase real-time weather data using the [Weather Api](https://www.weatherapi.com/docs/). The project integrates key technical concepts, including Rails controllers, service objects (Interactors), model objects with ActiveModel, and a custom client for Weather API interaction. TailwindCSS is used for styling the views.
 
 ## Getting Started
 
