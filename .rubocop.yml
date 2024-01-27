@@ -47,7 +47,7 @@ Rails/I18nLocaleTexts:
   Enabled: false
 
 RSpec/MultipleExpectations:
-  Max: 5
+  Max: 10
 
 RSpec/MessageSpies:
   EnforcedStyle: receive
