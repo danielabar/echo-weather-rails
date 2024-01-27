@@ -51,6 +51,8 @@ The application relies on environment variables to securely store sensitive info
 2. Open the .env file in a text editor.
 3. Replace the placeholder `fill_me_in` in the `WEATHER_API_KEY` variable with the API key you obtained from Weather Api.
 
+Restart the dev server after updating the environment variables.
+
 ## Usage
 
 Once the application is running, you can access the weather information by navigating to the root URL: http://localhost:3000/, where you'll be presented with a search form:
