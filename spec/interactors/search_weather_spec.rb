@@ -4,10 +4,10 @@ describe SearchWeather do
   let(:weather_response) { build(:weather_response) }
 
   describe ".call" do
-    subject(:result) { described_class.call(context) }
+    subject(:result) { described_class.call(interactor_context) }
 
     let(:address) { "Paris" }
-    let(:context) { Interactor::Context.new(address:) }
+    let(:interactor_context) { { address: } }
 
     it "fetches and builds the current weather data" do
       weather_client_instance = instance_double(Weather::Client)
@@ -55,7 +55,7 @@ describe SearchWeather do
     end
 
     context "with a blank address" do
-      let(:context) { Interactor::Context.new(address: "") }
+      let(:interactor_context) { { address: "" } }
 
       it "fails with an error message" do
         expect(result).to be_a_failure

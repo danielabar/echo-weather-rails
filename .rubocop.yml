@@ -48,3 +48,6 @@ Rails/I18nLocaleTexts:
 
 RSpec/MultipleExpectations:
   Max: 5
+
+RSpec/MessageSpies:
+  EnforcedStyle: receive
