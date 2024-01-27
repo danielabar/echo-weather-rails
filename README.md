@@ -120,7 +120,7 @@ end
 
 ### Weather Controller
 
-The `WeatherController` handles the rendering of the weather information. The `index` action displays the default view, while the `search` action delegates to the `SearchWeather` Interactor to fetch and display weather details based on a user-provided address.
+The `WeatherController` handles the rendering of the weather information. The `index` action displays the default view, while the `search` action delegates to the `SearchWeather` Interactor to fetch and display weather details based on a user-provided address. The `search` action renders the results to the same index view, so the user can easily keep doing searches without having to navigate to a new page.
 
 ### SearchWeather Interactor
 
@@ -142,3 +142,88 @@ To configure caching for production:
 
 1. Install and configure Redis or Memcached on your production server.
 2. Update the caching configuration in the `config/environments/production.rb` file to use your chosen caching solution. See the [Rails Guides on Caching](https://guides.rubyonrails.org/caching_with_rails.html) for further details.
+
+## Potential Enhancements
+
+This section documents some potential future enhancements that could made to the Echo Weather application.
+
+**Resourceful Routing**
+
+Consider a more RESTful approach to routes such as:
+
+```ruby
+# config/routes.rb
+Rails.application.routes.draw do
+  root "weather#index"
+
+  resources :weather, only: [:index] do
+    collection do
+      get "search", action: :search, as: "search"
+    end
+  end
+end
+```
+
+**Model Input**
+
+The search form currently just specifies an address that is available to the controller via `params[:address]`. This is ok for just a single attribute, but if the search form was enhanced to add further attributes such as advanced search, it might be more convenient to create a model for this, using `ActiveModel` for a model not backed by a database table. Then the form could be bound to the model. This would also support adding validations handled by the model such as declaring required fields.
+
+Something like this:
+
+```ruby
+# app/models/weather/search.rb
+module Weather
+  class Search
+    include ActiveModel::Model
+
+    attr_accessor :address, :other_attr, ...
+
+    validates :address, presence: true
+  end
+end
+```
+
+```erb
+<%# app/views/weather/index.html.erb %>
+<%= form_with(model: weather_search, url: weather_search_path, method: :get) do |form| %>
+  <%= form.label :address, "Enter city, postal, or zip code" %>
+  <%= form.text_field :address, autofocus: true %>
+
+  <%= form.submit "Get Forecast" %>
+<% end %>
+```
+
+```ruby
+# app/controllers/weather_controller.rb
+class WeatherController < ApplicationController
+  def index
+    @weather_search = Weather::Search.new
+  end
+
+  def search
+    @weather_search = weather_search_params
+    result = SearchWeather.call(address: @weather_search)
+
+    if result.success?
+      @weather_current = result.weather_current
+      @cached_message = "Cached results" if result.from_cache
+    else
+      flash.now[:alert] = result.error
+    end
+
+    render :index
+  end
+
+  private
+
+  def weather_search_params
+    params.require(:weather_search).permit(:address, :other_attr)
+  end
+end
+```
+
+Then the `SearchWeather` interactor could check if the model was `valid?` before proceeding.
+
+**5 Day Forecast**
+
+In addition to `/current.json`, the Weather Api also provides a `/forecast.json` endpoint where a number of days from 1 - 14 can be specified to get a forecast for those days. This endpoint also returns the current day's weather. The `Weather::Client` could be enhanced to use this endpoint instead of `/current.json`. The `Weather::Current` model could either be refactored to `Weather::Forecast`, or a new model could be introduced to capture the high/low temperature for the upcoming days. The `SearchWeather` interactor would then have to do more work to parse the forecast response into a suitable model, which could then be rendered in the view.
