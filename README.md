@@ -2,6 +2,11 @@
 
 Echo Weather is a Ruby on Rails application built to showcase real-time weather data using the [Weather Api](https://www.weatherapi.com/docs/). The project integrates key technical concepts, including Rails controllers, service objects (Interactors), model objects with ActiveModel, and a custom client for Weather API interaction. TailwindCSS is used for styling the views.
 
+## Dependencies
+
+* Install [Docker](https://www.docker.com/) for your OS.
+* Install the Ruby version specified in [.ruby_version](.ruby_version) with your preferred Ruby version manager.
+
 ## Getting Started
 
 To set up and run the application, follow these steps to install the necessary dependencies, set up the database, and start the development server:
@@ -61,6 +66,14 @@ This will search the Weather API for the location you entered and display the we
 ![echo weather results](docs/doc-images/echo-weather-results.png "echo weather results")
 
 Air quality is based on the US - EPA standard. See the "Air Quality Data" section of the [Weather Api Docs](https://www.weatherapi.com/docs/) for further details.
+
+Your search query is in the resulting url, for example: http://localhost:3000/weather/search?address=Toronto&commit=Get+Forecast, so you can bookmark it for later or sharing (not the `localhost` version but when its deployed).
+
+To get weather for another location, simply enter another location in the search box, or click the New Search link at the bottom of the results.
+
+Weather results are cached for 30 minutes, so for example, if you search for "Toronto" again within 30 minutes of the first search, you'll get the exact same results with a caching indicator as shown below:
+
+![echo weather cached](docs/doc-images/echo-weather-cached.png "echo weather cached")
 
 ## Testing
 
