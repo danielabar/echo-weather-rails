@@ -50,8 +50,11 @@ The application relies on environment variables to securely store sensitive info
 
 2. Open the .env file in a text editor.
 3. Replace the placeholder `fill_me_in` in the `WEATHER_API_KEY` variable with the API key you obtained from Weather Api.
+4. Save the changes.
+5. Restart the dev server after updating the environment variables.
 
-Restart the dev server after updating the environment variables.
+The application uses the `config/weather.yml` file to centralize configuration settings, including the Weather API URL and key. The `config_for` method in Rails loads these settings into the application, making it easy to access them throughout the codebase using `Rails.application.config.weather["some_entry"]`.
+
 
 ## Usage
 
