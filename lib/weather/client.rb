@@ -2,8 +2,8 @@ module Weather
   class Client
     def initialize(conn = nil)
       @conn = conn || Faraday.new(
-        url: ENV.fetch("WEATHER_API_URL"),
-        params: { key: ENV.fetch("WEATHER_API_KEY", nil) },
+        url: Rails.application.config.weather["weather_api_url"],
+        params: { key: Rails.application.config.weather["weather_api_key"] },
         headers: { "Accept" => "application/json" }
       )
     end

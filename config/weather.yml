@@ -1,0 +1,13 @@
+default: &default
+  weather_api_url: <%= ENV.fetch("WEATHER_API_URL") { "https://api.weatherapi.com/v1" } %>
+  weather_api_key: <%= ENV["WEATHER_API_KEY"] %>
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+production:
+  weather_api_url: <%= ENV["WEATHER_API_URL"] %>
+  weather_api_key: <%= ENV["WEATHER_API_KEY"] %>
