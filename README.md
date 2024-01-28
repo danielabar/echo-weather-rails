@@ -27,7 +27,7 @@ bin/dev
 
 ## Database Initialization
 
-Although the project is set up to use a PostgreSQL database, it is currently not utilized as all the weather data is fetched directly from the Weather API. The database is initialized to handle potential future requirements, such as implementing user logins. In the future, users could save their frequently accessed weather locations or perform other data-related tasks.
+Although the project is set up to use a PostgreSQL database, it is currently not utilized as all the weather data is fetched directly from the Weather API. The database is initialized to handle potential future requirements, such as implementing user logins. In the future, users could save their frequently accessed weather locations or perform other data-related tasks. This blog post covers the benefits of using [Docker containers for local development](https://danielabaron.me/blog/rails-postgres-docker/).
 
 ## Configuration
 
