@@ -107,6 +107,30 @@ Note that Capybara is currently using the default `:rack_test` driver rather tha
 
 This section explains the major technical areas of the application.
 
+```mermaid
+sequenceDiagram
+  participant User
+  participant WeatherController
+  participant SearchWeatherInteractor
+  participant WeatherClient
+  participant WeatherCurrentModel
+
+  User->>WeatherController: Visit website
+  WeatherController->>User: Render default view (index)
+
+  User->>WeatherController: Perform search with address
+  WeatherController->>SearchWeatherInteractor: Delegate search
+  SearchWeatherInteractor->>WeatherClient: Fetch weather data
+  WeatherClient-->>SearchWeatherInteractor: JSON data
+  SearchWeatherInteractor->>WeatherCurrentModel: Structure data
+  WeatherCurrentModel-->>SearchWeatherInteractor: Weather::Current model
+  SearchWeatherInteractor-->>WeatherController: Weather::Current model
+  WeatherController->>User: Render search results in index view
+
+  Note right of WeatherController: User can continue<br>to perform searches without<br>navigating to a new page
+
+```
+
 ### Routes
 
 The application's routes are defined as follows:
@@ -133,6 +157,8 @@ The `Weather::Client` is a custom client responsible for interacting with the We
 ### Weather::Current Model
 
 The `Weather::Current` model is designed to collect and structure the Weather API data for easy integration into the UI. It includes attributes such as temperature, condition, air quality, and location details.
+
+
 
 ## Deployment
 
